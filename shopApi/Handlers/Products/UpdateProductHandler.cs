@@ -27,11 +27,11 @@ namespace shopApi.Handlers
             return product;
         }
 
-        private void UpdateProduct(Product product, Product newProduct)
+        private void UpdateProduct(Product product, Product newProductData)
         {
-            product.Name = newProduct.Name;
-            product.Description = newProduct.Description;
-            product.Price = newProduct.Price;
+            product.Name = newProductData.Name;
+            product.Description = newProductData.Description;
+            product.Price = newProductData.Price;
         }
     }
 }

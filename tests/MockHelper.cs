@@ -16,15 +16,6 @@ namespace tests
             new Product { Id = 2, Name = "Product 3", Price = 30, Description = "Product 3 description" }
         };
 
-        public static TestDataContext CreateIDataContext(List<Product> products = null)
-        {
-            var mock = CreateMockProductDbSet(products);
-            mock.Setup(x => x.Add(It.IsAny<Product>())).Verifiable();
-            mock.Setup(x => x.Remove(It.IsAny<Product>())).Verifiable();
-
-            return new TestDataContext(mock.Object);
-        }
-
         public static Mock<DbSet<Product>> CreateMockProductDbSet(IEnumerable<Product> products)
         {
             return products.AsQueryable().BuildMockDbSet();
@@ -33,6 +24,7 @@ namespace tests
         public static Mock<TestDataContext> CreateMockDataContext(Mock<DbSet<Product>> products)
         {
             var mockDataContext = new Mock<TestDataContext>(products.Object);
+            
             mockDataContext.Setup(x => x.Products).Returns(products.Object);
             mockDataContext.Setup(x => x.SaveChangesAsync(default)).ReturnsAsync(1).Verifiable();
             

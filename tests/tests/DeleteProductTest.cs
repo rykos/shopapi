@@ -26,7 +26,7 @@ public class DeleteProductTest
     {
         var mockdbSet = Helper.CreateMockProductDbSet(products);
         var dataContext = new Mock<TestDataContext>(mockdbSet.Object);
-        ConfigureMockDbSet(mockdbSet, dataContext, id);
+        ConfigureMocks(mockdbSet, dataContext, id);
 
         var handler = new RemoveProductHandler(dataContext.Object);
 
@@ -45,7 +45,7 @@ public class DeleteProductTest
     {
         var mockdbSet = Helper.CreateMockProductDbSet(products);
         var dataContext = new Mock<TestDataContext>(mockdbSet.Object);
-        ConfigureMockDbSet(mockdbSet, dataContext, id);
+        ConfigureMocks(mockdbSet, dataContext, id);
 
         var handler = new RemoveProductHandler(dataContext.Object);
 
@@ -55,7 +55,7 @@ public class DeleteProductTest
         mockdbSet.Verify(x => x.Remove(It.IsAny<Product>()), Times.Never);
     }
 
-    private void ConfigureMockDbSet(Mock<DbSet<Product>> mockdbSet, Mock<TestDataContext> dataContext, long id)
+    private void ConfigureMocks(Mock<DbSet<Product>> mockdbSet, Mock<TestDataContext> dataContext, long id)
     {
         mockdbSet.Setup(x => x.FindAsync(It.IsAny<long>()))
             .ReturnsAsync(products.FirstOrDefault(x => x.Id == id));
